@@ -1,0 +1,26 @@
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Zoomees API",
+            "runtimeArgs": [
+                "--nolazy",
+                "-r",
+                "ts-node/register",
+                "-r",
+                "tsconfig-paths/register"
+            ],
+            "args": [
+                "${workspaceFolder}/api/src/main.ts"
+            ],
+            "sourceMaps": true,
+            "envFile": "${workspaceFolder}/api/.env",
+            "cwd": "${workspaceRoot}/api/src",
+            "console": "integratedTerminal",
+            "protocol": "inspector"
+        }
+    ]
+}

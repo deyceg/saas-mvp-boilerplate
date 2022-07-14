@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  devcontainer-node:
+    image: zoomees/devcontainer-node:latest
+    build:
+      context: .
+      dockerfile: ./Dockerfile.node
+    container_name: zoomees
+    hostname: zoomees.local
+    working_dir: /src
+    volumes:
+       - ..:/src
+    command: sleep infinity
+
+  postgres:
+    image: postgres:14.1-alpine
+    container_name: postgres
+    hostname: postgres.local
+    restart: always
+    environment:
+      - POSTGRES_DB=zoomees
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+
+volumes:
+  db:
+    driver: local

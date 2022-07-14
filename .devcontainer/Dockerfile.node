@@ -1,0 +1,10 @@
+FROM node:lts-gallium
+
+RUN npm install -g pnpm @nestjs/cli
+
+################################################################################
+# Install prerequisites
+RUN apt-get update
+RUN apt-get install -y \
+    lsb-release \
+    curl
