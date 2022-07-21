@@ -1,5 +1,6 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { FeatureEnabled } from '@rafaelortegabueno/nestjs-feature-toggle';
 import { InjectMetric } from '@willsoto/nestjs-prometheus';
 import { Counter } from 'prom-client';
 import { AuthService } from './auth.service';
@@ -23,6 +24,7 @@ export class AuthController {
   // }
 
   @Post('/signup')
+  @FeatureEnabled('FEATURE_ALLOW_SIGNUP')
   @HttpCode(200)
   async signup(@Body() signupRequest: SignupRequest): Promise<TokenResponse> {
     const res = Promise.resolve({

@@ -1,34 +1,45 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/auth": {
+    "/metrics": {
+      "get": {
+        "operationId": "PrometheusController_index",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/signup": {
       "post": {
-        "operationId": "AuthController_login",
+        "operationId": "AuthController_signup",
         "parameters": [],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/LoginRequest"
+                "$ref": "#/components/schemas/SignupRequest"
               }
             }
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
+                  "$ref": "#/components/schemas/TokenResponse"
                 }
               }
             }
           }
         },
         "tags": [
-          "Auth"
+          "auth"
         ]
       }
     }
@@ -43,31 +54,36 @@
   "servers": [],
   "components": {
     "schemas": {
-      "LoginRequest": {
+      "SignupRequest": {
         "type": "object",
         "properties": {
+          "email": {
+            "type": "string"
+          },
           "username": {
             "type": "string"
           },
           "password": {
+            "type": "string",
+            "minLength": 8
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
             "type": "string"
           }
         },
         "required": [
-          "username",
-          "password"
+          "email",
+          "password",
+          "firstName",
+          "lastName"
         ]
       },
-      "LoginResponse": {
+      "TokenResponse": {
         "type": "object",
-        "properties": {
-          "accessToken": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "accessToken"
-        ]
+        "properties": {}
       }
     }
   }

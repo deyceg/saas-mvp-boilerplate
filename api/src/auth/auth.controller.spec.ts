@@ -7,6 +7,7 @@ import { makeCounterProvider, getToken } from '@willsoto/nestjs-prometheus';
 import { Builder } from 'builder-pattern';
 import { createSignupRequest } from '../../test/factory';
 import { User } from './entities/user.entity';
+import { APP_GUARD } from '@nestjs/core';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -17,6 +18,12 @@ describe('AuthController', () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [AuthController],
       providers: [
+        // {
+        //   provide: APP_GUARD,
+        //   useValue: {
+        //     canActivate: jest.fn(),
+        //   },
+        // },
         makeCounterProvider({
           name: 'signup_total',
           help: 'Total number of successful signups',

@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "name": "api",
+      "path": "../api"
+    },
+    {
+      "name": "frontend",
+      "path": "../frontend"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "node_modules/": true,
+      "packages/": true
+    },
+    "jest.autoEnable": false,
+    "jest.disabledWorkspaceFolders": ["ROOT"]
+  },
+  "extensions": {
+    "recommendations": ["dbaeumer.vscode-eslint"]
+  }
+}

@@ -5,7 +5,7 @@ import {
   SwaggerModule,
 } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { Environment } from './common/environment';
+import { Environment } from './common/conf/environment';
 import * as fs from 'fs';
 import orval from 'orval';
 import {
@@ -13,6 +13,7 @@ import {
   ValidationPipe,
   ValidationPipeOptions,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 export const configureSwagger = (app: INestApplication): void => {
   const swaggerOptions: SwaggerDocumentOptions = {};
@@ -55,7 +56,7 @@ async function bootstrap() {
   configureSwagger(app);
   configureREST(app);
 
-  await app.listen(3001);
+  await app.listen(process.env.PORT);
 }
 
 bootstrap();

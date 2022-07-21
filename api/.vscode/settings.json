@@ -1,0 +1,14 @@
+{
+  "sqltools.connections": [
+    {
+      "username": "postgres",
+      "password": "postgres",
+      "server": "postgres.local",
+      "database": "zoomees",
+      "driver": "PostgreSQL",
+      "name": "local"
+    }
+  ],
+  "jestrunner.jestCommand": "npm run test --",
+  "jestrunner.projectPath": "api"
+}
