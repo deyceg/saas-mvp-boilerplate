@@ -2,10 +2,10 @@
 // const { compilerOptions } = require('../tsconfig.json');
 
 // const paths = compilerOptions.paths ? compilerOptions.paths : {};
-
+console.log('using conf')
 module.exports = {
-  rootDir: 'src',
-  //   setupFilesAfterEnv: ['jest.setup.ts'],
+  rootDir: '.',
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
   //   testPathIgnorePatterns: [
   //     '<rootDir>/.next/',
   //     '<rootDir>/node_modules/',

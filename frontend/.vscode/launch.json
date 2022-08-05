@@ -8,7 +8,7 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "disableOptimisticBPs": true,
-      "cwd": "/src/frontend",
+      "cwd": "/src",
       "runtimeExecutable": "npm",
       "args": [
         "run",

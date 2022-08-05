@@ -1,0 +1,19 @@
+{
+  "name": "Frontend",
+  "dockerComposeFile": ["../../docker-compose.yml"],
+  // The name of the following service has to match one of the services in docker-compose.yml
+  "service": "frontend",
+  "workspaceFolder": "/src",
+  "extensions": [
+    "firsttris.vscode-jest-runner",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "ms-vsliveshare.vsliveshare",
+    "dbaeumer.vscode-eslint",
+    "ms-playwright.playwright",
+    "styled-components.vscode-styled-components"
+  ],
+  "shutdownAction": "stopCompose",
+  "remoteUser": "node"
+}

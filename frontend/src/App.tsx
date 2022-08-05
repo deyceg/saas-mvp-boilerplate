@@ -1,20 +1,20 @@
-import 'antd/dist/antd.css';
-import { StyledThemeProvider } from 'definitions/styled-components';
+import 'index.css';
 import { RootStoreProvider } from 'store';
-import './i18n';
-
 import { Routes, Route } from 'react-router-dom';
-import SignUp from 'pages/signup';
+import { NotFound, SignUp, Home, Product, Settings } from "pages";
+import { RouteMap } from "router/route-map";
 
 function App(): JSX.Element {
   return (
-    <StyledThemeProvider>
-      <RootStoreProvider>
-        <Routes>
-          <Route path="/signup" element={<SignUp />} />
-        </Routes>
-      </RootStoreProvider>
-    </StyledThemeProvider>
+        <RootStoreProvider>
+          <Routes>
+            <Route path={`/${RouteMap.SIGNUP}`} element={<SignUp />} />
+            <Route path={`/${RouteMap.PRODUCT}`} element={<Product />} />
+            <Route path={`/${RouteMap.HOME}`} element={<Home />} />
+            <Route path={`/${RouteMap.SETTINGS}`} element={<Settings />} />
+            <Route path={`/${RouteMap.WILDCARD}`} element={<NotFound />} />
+          </Routes>
+        </RootStoreProvider>
   );
 }
 

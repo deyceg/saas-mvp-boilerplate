@@ -1,0 +1,19 @@
+{
+  "name": "Backend",
+  "dockerComposeFile": ["../../docker-compose.yml"],
+  // The name of the following service has to match one of the services in docker-compose.yml
+  "service": "backend",
+  "workspaceFolder": "/src",
+  "extensions": [
+    "firsttris.vscode-jest-runner",
+    "esbenp.prettier-vscode",
+    "eamodio.gitlens",
+    "ms-vscode.vscode-typescript-tslint-plugin",
+    "ms-vsliveshare.vsliveshare",
+    "dbaeumer.vscode-eslint",
+    "mtxr.sqltools",
+    "mtxr.sqltools-driver-pg"
+  ],
+  "shutdownAction": "stopCompose",
+  "remoteUser": "node"
+}

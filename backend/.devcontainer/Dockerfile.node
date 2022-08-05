@@ -1,0 +1,32 @@
+# Base image
+FROM sitespeedio/node:ubuntu-20.04-nodejs-16.16.0
+
+# Args
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Environment variables
+ENV TZ=Europe/London
+
+RUN apt-get update
+
+# Developement packages
+RUN apt-get install -y \
+    tzdata \
+    lsb-release \
+    git \
+    curl \
+    jq
+
+# Global node packages
+RUN npm install -g pnpm @nestjs/cli
+
+## cleanup of files from setup
+RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN curl -fsSL https://get.pulumi.com | sh
+
+# Add node user
+RUN groupadd --gid 1000 node \
+    && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
+
+USER node

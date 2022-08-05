@@ -1,17 +1,6 @@
 {
-  "sqltools.connections": [
-    {
-      "username": "postgres",
-      "password": "postgres",
-      "server": "postgres.local",
-      "database": "zoomees",
-      "driver": "PostgreSQL",
-      "name": "local"
-    }
-  ],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "prettier.singleQuote": true,
   "prettier.printWidth": 120,
-  "jestrunner.jestCommand": "npm run test --"
 }
