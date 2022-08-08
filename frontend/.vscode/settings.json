@@ -1,3 +1,7 @@
 {
   "jestrunner.jestCommand": "npm run test --",
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true,
+  "prettier.printWidth": 120,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

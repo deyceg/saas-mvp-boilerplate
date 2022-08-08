@@ -5,7 +5,7 @@ import { HorizontalTabs } from "components/navigation/horizontal/HorizontalTabs"
 import { VerticalNav } from "components/navigation/vertical/VerticalNav";
 import { Profile } from "./settings/Profile";
 
-const Content = () => {
+const SettingContent = () => {
   return (
     <>
       <div className="px-6">
@@ -21,7 +21,7 @@ export const Settings = () => {
     <>
       <TwoColumnLayout
         header={ <Header /> } 
-        section={ <Content /> } 
+        section={ <SettingContent /> } 
         //footer= { <Footer />}
         aside={<VerticalNav/>}
         bgColor='white'

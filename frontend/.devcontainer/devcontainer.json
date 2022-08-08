@@ -12,7 +12,8 @@
     "ms-vsliveshare.vsliveshare",
     "dbaeumer.vscode-eslint",
     "ms-playwright.playwright",
-    "styled-components.vscode-styled-components"
+    "styled-components.vscode-styled-components",
+    "bradlc.vscode-tailwindcss"
   ],
   "shutdownAction": "stopCompose",
   "remoteUser": "node"

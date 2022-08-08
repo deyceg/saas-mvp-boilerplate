@@ -1,10 +1,10 @@
-import { NavBar } from "components/navigation/navbar/NavBar"
-import { Logo } from "./Logo"
+import { NavBar } from 'components/navigation/navbar/NavBar';
+import { LogoWithStrapline } from './Logo';
 
 export const Header = () => {
-    return (
-        <>
-            <NavBar logo={<Logo />} />
-        </>
-    )
-}
+  return (
+    <>
+      <NavBar logo={<LogoWithStrapline />} />
+    </>
+  );
+};
