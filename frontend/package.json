@@ -73,6 +73,7 @@
     "@testing-library/user-event": "v14",
     "@types/styled-system": "^5.1.11",
     "autoprefixer": "^10.4.7",
+    "builder-pattern": "^1.3.0",
     "dotenv": "^16.0.1",
     "jest-styled-components": "^7.0.8",
     "jsdom": "^20.0.0",

@@ -4,6 +4,13 @@ import { FormSubmit } from 'components/forms/FormSubmit';
 import { Facebook } from 'components/social/FacebookIcon';
 import { Spinner } from 'components/feedback/progress/Spinner';
 import { useState } from 'react';
+import { TailwindButton } from 'components/core/button/Button';
+import { noop } from 'utils';
+import { ArrowCircleDownIcon as OutlineIcon } from '@heroicons/react/outline';
+import { ArrowCircleDownIcon as SolidIcon } from '@heroicons/react/solid';
+import { TailwindCard } from 'components/core/card/Card';
+import { SignUpHeader } from './SignUpHeader';
+import { SignUpFooter } from './SignUpFooter';
 
 type SignUpFormProps = {
   onSuccess?: Function;
@@ -19,7 +26,65 @@ export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
 
   return (
     <>
-      <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+      <TailwindCard
+        variant="dark"
+        header={<SignUpHeader />}
+        body={
+          <Form onSubmit={onSubmit}>
+            <FieldInput
+              id="email"
+              label="Email address"
+              type={'email'}
+              options={{ required: `Email is required` }}
+              variant={'dark'}
+            />
+
+            <FieldInput
+              id="password"
+              label="Password"
+              type={'password'}
+              options={{ required: `Password is required` }}
+              variant={'dark'}
+            />
+
+            <FormSubmit
+              isLoading={isLoading}
+              loadingIndiciator={<Spinner />}
+              text={'Sign Up'}
+            />
+          </Form>
+        }
+        footer={<SignUpFooter />}
+      />
+      <TailwindCard
+        variant="light"
+        header={<SignUpHeader />}
+        body={
+          <Form onSubmit={onSubmit}>
+            <FieldInput
+              id="email"
+              label="Email address"
+              type={'email'}
+              options={{ required: `Email is required` }}
+            />
+
+            <FieldInput
+              id="password"
+              label="Password"
+              type={'password'}
+              options={{ required: `Password is required` }}
+            />
+
+            <FormSubmit
+              isLoading={isLoading}
+              loadingIndiciator={<Spinner />}
+              text={'Sign Up'}
+            />
+          </Form>
+        }
+        footer={<SignUpFooter />}
+      />
+      {/* <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
         <Form onSubmit={onSubmit}>
           <FieldInput
             id="email"
@@ -39,6 +104,48 @@ export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
             isLoading={isLoading}
             loadingIndiciator={<Spinner />}
             text={'Sign Up'}
+          />
+          <TailwindButton
+            text="Sign Up"
+            onClick={noop}
+            width={'percent'}
+            size={'sm'}
+            type={'solid'}
+          />
+          <TailwindButton
+            text="Sign Up"
+            onClick={noop}
+            width={'percent'}
+            size={'md'}
+            type={'solid'}
+            Icon={Spinner}
+            iconPosition={'right'}
+          />
+          <TailwindButton
+            text="Sign Up"
+            onClick={noop}
+            width={'percent'}
+            size={'lg'}
+            type={'solid'}
+            variant={'secondary'}
+            Icon={SolidIcon}
+          />
+          <TailwindButton
+            text="Sign Up"
+            onClick={noop}
+            width={'percent'}
+            size={'lg'}
+            type={'ghost'}
+            variant={'primary'}
+          />
+          <TailwindButton
+            text="Sign Up"
+            onClick={noop}
+            width={'percent'}
+            size={'lg'}
+            type={'ghost'}
+            variant={'secondary'}
+            Icon={Spinner}
           />
         </Form>
 
@@ -66,7 +173,7 @@ export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

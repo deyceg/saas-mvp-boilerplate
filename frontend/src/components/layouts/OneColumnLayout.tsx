@@ -21,7 +21,8 @@ type OneColumnLayoutProps = {
   /**
    * Set the background color of the \<body\> element
    */
-  bgColor?: 'black' | 'white' | 'indigo' | 'gray';
+  //FIXME: strongly type
+  bgColor?: string;
   children?: JSX.Element[];
 };
 
@@ -37,14 +38,15 @@ export const OneColumnLayout = ({
 }: OneColumnLayoutProps) => {
   const bodyClass = classNames(
     { 'h-full': true },
-    {
-      [`bg-${bgColor}-50`]:
-        bgColor !== null && bgColor !== 'white' && bgColor !== 'black',
-    },
-    {
-      [`bg-${bgColor}`]:
-        bgColor !== null && (bgColor === 'white' || bgColor === 'black'),
-    },
+    { [`bg-${bgColor}`]: true },
+    // {
+    //   [`bg-${bgColor}-50`]:
+    //     bgColor !== null && bgColor !== 'white' && bgColor !== 'black',
+    // },
+    // {
+    //   [`bg-${bgColor}`]:
+    //     bgColor !== null && (bgColor === 'white' || bgColor === 'black'),
+    // },
   );
   const containerClass = classNames(
     { 'min-h-full': true }, // fullscreen

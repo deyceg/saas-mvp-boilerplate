@@ -17,7 +17,7 @@ const SignUpContent = () => {
   return (
     <>
       <div className={containerClass}>
-        <SignUpHeader />
+        {/* <SignUpHeader /> */}
         <SignUpForm />
       </div>
     </>
@@ -38,7 +38,7 @@ export const SignUpPage = () => {
         main={<SignUpContent />}
         footer={<Footer />}
         maxWidth="md"
-        bgColor="gray"
+        bgColor="gray-900"
       />
     </>
   );
