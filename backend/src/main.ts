@@ -29,9 +29,10 @@ export const configureSwagger = (app: INestApplication): void => {
   );
 
   SwaggerModule.setup('api', app, document);
-
+  console.log(process.env.NODE_ENV);
   // Generate client code from Swagger specification
   if (process.env.NODE_ENV === Environment.DEV) {
+    console.log('t');
     fs.writeFileSync('./swagger.json', JSON.stringify(document, null, 2));
     orval('./orval.config.js');
   }

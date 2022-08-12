@@ -15,13 +15,15 @@ export class AuthController {
     @InjectMetric('signup_total') public signupCounter: Counter<string>,
   ) {}
 
-  // @Post()
-  // @HttpCode(200)
-  // async login(@Body() loginRequest: LoginRequest): Promise<TokenResponse> {
-  //   return Promise.resolve({
-  //     accessToken: `${loginRequest.username}:${loginRequest.password}`,
-  //   });
-  // }
+  @Post('/login')
+  @HttpCode(200)
+  async login(@Body() loginRequest: LoginRequest): Promise<TokenResponse> {
+    const res = Promise.resolve({
+      accessToken: await this.authService.login(loginRequest),
+    });
+
+    return res;
+  }
 
   @Post('/signup')
   @FeatureEnabled('FEATURE_ALLOW_SIGNUP')

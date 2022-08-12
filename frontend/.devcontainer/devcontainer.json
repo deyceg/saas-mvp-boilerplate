@@ -5,7 +5,6 @@
   "service": "frontend",
   "workspaceFolder": "/src",
   "extensions": [
-    "firsttris.vscode-jest-runner",
     "esbenp.prettier-vscode",
     "eamodio.gitlens",
     "ms-vscode.vscode-typescript-tslint-plugin",
@@ -13,8 +12,11 @@
     "dbaeumer.vscode-eslint",
     "ms-playwright.playwright",
     "styled-components.vscode-styled-components",
-    "bradlc.vscode-tailwindcss"
+    "bradlc.vscode-tailwindcss",
+    "Orta.vscode-jest"
   ],
   "shutdownAction": "stopCompose",
-  "remoteUser": "node"
+  "remoteUser": "node",
+  "forwardPorts": [8080],
+  "onCreateCommand": "npx playwright install"
 }

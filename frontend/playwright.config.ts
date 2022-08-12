@@ -5,8 +5,10 @@ import { devices } from '@playwright/test';
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
  */
-// require('dotenv').config();
+require('dotenv').config();
 
+const port = process.env.PORT;
+const baseURL = process.env.BASE_URL;
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -14,26 +16,39 @@ const config: PlaywrightTestConfig = {
   testDir: './tests',
   testMatch: /.*\.e2e\.(js|ts)/,
   /* Maximum time one test can run for. */
-  timeout: 30 * 1000,
+  timeout: 10 * 1000,
   expect: {
     /**
      * Maximum time expect() should wait for the condition to be met.
      * For example in `await expect(locator).toHaveText();`
      */
-    timeout: 5000
+    timeout: 5000,
   },
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   forbidOnly: !!process.env.CI,
   /* Retry on CI only */
-  retries: process.env.CI ? 2 : 0,
+  retries: process.env.CI ? 2 : 1,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    contextOptions: {},
+    launchOptions: {
+      args: [
+        '--ignore-certificate-errors',
+        '--allow-insecure-localhost',
+        '--unsafely-treat-insecure-origin-as-secure=https://localhost:3000',
+      ],
+    },
+    headless: true,
+    video: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    baseURL: `${baseURL}${port ? `:${port}` : ''}`,
+    ignoreHTTPSErrors: true,
     /* Maximum time each action such as `click()` can take. Defaults to 0 (no limit). */
     actionTimeout: 0,
     /* Base URL to use in actions like `await page.goto('/')`. */
@@ -99,10 +114,18 @@ const config: PlaywrightTestConfig = {
   // outputDir: 'test-results/',
 
   /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'npm run start',
-  //   port: 3000,
-  // },
+  webServer: {
+    command: 'npm run dev',
+    url: `${baseURL}${port ? `:${port}` : ''}`,
+    timeout: 120 * 1000,
+    ignoreHTTPSErrors: true,
+    env: {
+      HTTPS: 'true',
+      BROWSER: 'none',
+      NODE_ENV: 'development',
+      FAST_REFRESH: 'false',
+    },
+  },
 };
 
 export default config;

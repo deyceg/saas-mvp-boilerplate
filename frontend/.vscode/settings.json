@@ -1,7 +1,13 @@
 {
-  "jestrunner.jestCommand": "npm run test --",
   "editor.formatOnSave": true,
   "prettier.singleQuote": true,
   "prettier.printWidth": 120,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "ngClass",
+    "classNames"
+  ],
+  "jest.autoRun": "off"
 }

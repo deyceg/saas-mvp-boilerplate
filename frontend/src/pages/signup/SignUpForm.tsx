@@ -1,179 +1,76 @@
 import { FieldInput } from 'components/forms/FieldInput';
 import { Form } from 'components/forms/Form';
-import { FormSubmit } from 'components/forms/FormSubmit';
-import { Facebook } from 'components/social/FacebookIcon';
 import { Spinner } from 'components/feedback/progress/Spinner';
-import { useState } from 'react';
 import { TailwindButton } from 'components/core/button/Button';
 import { noop } from 'utils';
-import { ArrowCircleDownIcon as OutlineIcon } from '@heroicons/react/outline';
-import { ArrowCircleDownIcon as SolidIcon } from '@heroicons/react/solid';
-import { TailwindCard } from 'components/core/card/Card';
-import { SignUpHeader } from './SignUpHeader';
-import { SignUpFooter } from './SignUpFooter';
+import { FormProvider, useForm } from 'react-hook-form';
+import { FieldPassword } from 'components/forms/FieldPassword';
+import { useAuthControllerSignup } from 'api/endpoints/auth/auth';
 
 type SignUpFormProps = {
   onSuccess?: Function;
 };
 
 export const SignUpForm = ({ onSuccess }: SignUpFormProps) => {
-  const [isLoading, setLoading] = useState(false);
+  const methods = useForm({ criteriaMode: 'all' });
+  const { clearErrors, getValues } = methods;
+  const { status, isLoading, mutate } = useAuthControllerSignup({
+    mutation: {
+      onSuccess: (data, variables, context) => onSuccess(data),
+    },
+  });
   const onSubmit = (data) => {
-    setLoading(true);
-    console.log(data);
-    setTimeout(() => setLoading(false), 5000);
+    mutate(data);
   };
 
   return (
-    <>
-      <TailwindCard
-        variant="dark"
-        header={<SignUpHeader />}
-        body={
-          <Form onSubmit={onSubmit}>
-            <FieldInput
-              id="email"
-              label="Email address"
-              type={'email'}
-              options={{ required: `Email is required` }}
-              variant={'dark'}
-            />
+    <FormProvider {...methods}>
+      <Form onSubmit={onSubmit}>
+        <FieldInput
+          id="email"
+          label="Email address"
+          type={'input'}
+          options={{ required: `Email is required` }}
+        />
 
-            <FieldInput
-              id="password"
-              label="Password"
-              type={'password'}
-              options={{ required: `Password is required` }}
-              variant={'dark'}
-            />
+        <FieldInput
+          id="firstName"
+          label="First Name"
+          type={'input'}
+          options={{ required: `First name is required` }}
+        />
 
-            <FormSubmit
-              isLoading={isLoading}
-              loadingIndiciator={<Spinner />}
-              text={'Sign Up'}
-            />
-          </Form>
-        }
-        footer={<SignUpFooter />}
-      />
-      <TailwindCard
-        variant="light"
-        header={<SignUpHeader />}
-        body={
-          <Form onSubmit={onSubmit}>
-            <FieldInput
-              id="email"
-              label="Email address"
-              type={'email'}
-              options={{ required: `Email is required` }}
-            />
+        <FieldInput
+          id="lastName"
+          label="Last Name"
+          type={'input'}
+          options={{ required: `Last name is required` }}
+        />
 
-            <FieldInput
-              id="password"
-              label="Password"
-              type={'password'}
-              options={{ required: `Password is required` }}
-            />
+        <FieldPassword id="password" label="Password" options={{}} />
 
-            <FormSubmit
-              isLoading={isLoading}
-              loadingIndiciator={<Spinner />}
-              text={'Sign Up'}
-            />
-          </Form>
-        }
-        footer={<SignUpFooter />}
-      />
-      {/* <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-        <Form onSubmit={onSubmit}>
-          <FieldInput
-            id="email"
-            label="Email address"
-            type={'email'}
-            options={{ required: `Email is required` }}
-          />
+        <FieldInput
+          id="confirmPassword"
+          label="Confirm Password"
+          type={'password'}
+          options={{
+            validate: (v) =>
+              getValues('password') === v || 'Password does not match',
+          }}
+        />
 
-          <FieldInput
-            id="password"
-            label="Password"
-            type={'password'}
-            options={{ required: `Password is required` }}
-          />
-
-          <FormSubmit
-            isLoading={isLoading}
-            loadingIndiciator={<Spinner />}
-            text={'Sign Up'}
-          />
-          <TailwindButton
-            text="Sign Up"
-            onClick={noop}
-            width={'percent'}
-            size={'sm'}
-            type={'solid'}
-          />
-          <TailwindButton
-            text="Sign Up"
-            onClick={noop}
-            width={'percent'}
-            size={'md'}
-            type={'solid'}
-            Icon={Spinner}
-            iconPosition={'right'}
-          />
-          <TailwindButton
-            text="Sign Up"
-            onClick={noop}
-            width={'percent'}
-            size={'lg'}
-            type={'solid'}
-            variant={'secondary'}
-            Icon={SolidIcon}
-          />
-          <TailwindButton
-            text="Sign Up"
-            onClick={noop}
-            width={'percent'}
-            size={'lg'}
-            type={'ghost'}
-            variant={'primary'}
-          />
-          <TailwindButton
-            text="Sign Up"
-            onClick={noop}
-            width={'percent'}
-            size={'lg'}
-            type={'ghost'}
-            variant={'secondary'}
-            Icon={Spinner}
-          />
-        </Form>
-
-        <div className="mt-6">
-          <div className="relative">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
-            </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">
-                Or continue with
-              </span>
-            </div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-1 gap-3">
-            <div>
-              <a
-                href="#"
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                <span className="sr-only">Sign in with Google</span>
-                <Facebook />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div> */}
-    </>
+        <TailwindButton
+          onClick={noop}
+          variant={'solid'}
+          width={'full'}
+          size={'sm'}
+          Icon={Spinner}
+          text={'Sign Up'}
+          isActive={status === 'loading'}
+          iconEffect={'active'}
+          type={'submit'}
+        />
+      </Form>
+    </FormProvider>
   );
 };

@@ -1,32 +1,33 @@
-import React from "react"
-import { SubmitHandler, useForm } from "react-hook-form"
+import React from 'react';
+import { FormProvider, SubmitHandler, useFormContext } from 'react-hook-form';
 
 type FormProps = {
-    defaultValues?: Record<string, any>
-    children: JSX.Element[]
-    onSubmit: SubmitHandler<Record<string,any>>
-}
+  children: JSX.Element[];
+  onSubmit: SubmitHandler<Record<string, any>>;
+  [x: string]: any;
+};
 
-export const Form = ({ defaultValues = {}, children, onSubmit }: FormProps)  => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm({ defaultValues });
+export const Form = ({ children, onSubmit, ...rest }: FormProps) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useFormContext();
 
-    return (
-      <form 
-        className="space-y-6"
-        onSubmit={handleSubmit(onSubmit)}
-        >
-        {React.Children.map(children, child => {
-          return child.props.id
-            ? React.createElement(child.type, {
-                ...{
-                  ...child.props,
-                  register,
-                  key: child.props.id,
-                  errors
-                }
-              })
-            : child;
-         })}
-      </form>
-    );
-  }
+  return (
+    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+      {React.Children.map(children, (child) => {
+        return child.props.id
+          ? React.createElement(child.type, {
+              ...{
+                ...child.props,
+                register,
+                key: child.props.id,
+                errors,
+              },
+            })
+          : child;
+      })}
+    </form>
+  );
+};

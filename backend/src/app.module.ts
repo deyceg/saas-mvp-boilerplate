@@ -11,7 +11,12 @@ import * as promBundle from 'express-prom-bundle';
 import { AuthController } from './auth/auth.controller';
 import configuration from './common/conf/configuration';
 import { ConfigModule, ConfigService } from 'nestjs-config';
-import { TypedConfigModule, fileLoader, selectConfig, dotenvLoader } from 'nest-typed-config';
+import {
+  TypedConfigModule,
+  fileLoader,
+  selectConfig,
+  dotenvLoader,
+} from 'nest-typed-config';
 import * as path from 'path';
 import { AppConf } from './conf';
 import { HttpConf } from './conf/http';
@@ -49,7 +54,7 @@ import { HttpConf } from './conf/http';
       port: 5432,
       username: 'postgres',
       password: 'postgres',
-      database: 'zoomees',
+      database: 'local',
       autoLoadEntities: true,
       synchronize: true,
     }),

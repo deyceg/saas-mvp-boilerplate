@@ -72,21 +72,22 @@ type TailwindButtonProps = {
    */
   iconEffect?: 'static' | 'active';
   /**
+   * Control the alignment of the icon relative to it's position
+   */
+  iconAlignment?: 'left' | 'right';
+  /**
    * Switch between fixed and percentage based widths
    */
-  width?: 'fixed' | 'percent';
+  width?: 'fixed' | 'quarter' | 'half' | 'full';
   /**
    * Constrain the button width
    */
   size?: 'sm' | 'md' | 'lg';
+  type?: 'button' | 'submit';
   /**
    * Control the button variant
    */
-  type?: 'solid' | 'ghost';
-  /**
-   * Control the theme
-   */
-  variant?: 'primary' | 'secondary';
+  variant?: 'solid' | 'ghost';
 };
 
 export const TailwindButton = ({
@@ -96,95 +97,88 @@ export const TailwindButton = ({
   Icon = null,
   iconPosition = 'left',
   iconEffect = 'static',
-  width = 'percent',
+  iconAlignment = 'right',
+  width = 'full',
   size = 'md',
-  type = 'solid',
-  variant = 'primary',
+  type = 'button',
+  variant = 'solid',
 }: TailwindButtonProps) => {
-  // Classnames broadly map to tailwindcss categories.
-  const layoutClass = classNames('justify-center', {
+  // Classnames map to tailwindcss categories
+  const layoutClass = classNames({
+    'justify-center': true,
     flex: Icon === null,
-    'inline-flex items-center': Icon !== null,
+    'inline-flex items-center': Icon !== null, // vertical align icon + text
   });
-  const sizingClass = classNames(
+  const sizingClass = classNames({
     // percent
-    { 'w-1/4': width === 'percent' && size === 'sm' },
-    { 'w-1/2': width === 'percent' && size === 'md' },
-    { 'w-full': width === 'percent' && size === 'lg' },
+    'w-1/4': width === 'quarter',
+    'w-1/2': width === 'half',
+    'w-full': width === 'full',
     // fixed
-    { 'w-24': width === 'fixed' && size === 'sm' },
-    { 'w-48': width === 'fixed' && size === 'md' },
-    { 'w-96': width === 'fixed' && size === 'lg' },
-  );
-  const spacingClass = classNames(
-    { 'py-2 px-4': size === 'sm' },
-    { 'py-3 px-5': size === 'md' },
-    { 'py-4 px-6': size === 'lg' },
-  );
-  const typographyClass = classNames(
-    'font-medium',
-    { 'text-sm': size === 'sm' },
-    { 'text-md': size === 'md' },
-    { 'text-lg': size === 'lg' },
-  );
-  const borderClass = classNames(
-    'border rounded-md',
+    'w-24': width === 'fixed' && size === 'sm',
+    'w-48': width === 'fixed' && size === 'md',
+    'w-96': width === 'fixed' && size === 'lg',
+  });
+  const spacingClass = classNames({
+    'py-2 px-4': size === 'sm',
+    'py-3 px-5': size === 'md',
+    'py-4 px-6': size === 'lg',
+  });
+  const typographyClass = classNames({
+    'font-medium': true,
+    'text-sm': size === 'sm',
+    'text-md': size === 'md',
+    'text-lg': size === 'lg',
+  });
+  const borderClass = classNames({
+    'border rounded-md': true,
     // solid
-    { 'border-transparent': type === 'solid' && variant === 'primary' },
-    { 'border-transparent': type === 'solid' && variant === 'secondary' },
+    'border-transparent': variant === 'solid',
     // ghost
-    {
-      'border-indigo-600': type === 'ghost' && variant === 'primary',
-    },
-    { 'border-gray-600': type === 'ghost' && variant === 'secondary' },
-  );
-  const colorClass = classNames(
-    //solid
-    { 'bg-indigo-600 text-white': type === 'solid' && variant === 'primary' },
-    {
-      'bg-gray-600 text-white': type === 'solid' && variant === 'secondary',
-    },
+    '': variant === 'ghost',
+  });
+  const colorClass = classNames({
+    // solid
+    'bg-indigo-600 text-white': variant === 'solid',
     // ghost
-    { 'bg-white text-indigo-600': type === 'ghost' && variant === 'primary' },
-    { 'bg-white text-gray-600': type === 'ghost' && variant === 'secondary' },
-  );
-  const effectClass = classNames(
-    'shadow-sm',
-    //solid
-    {
-      'hover:bg-indigo-700': type === 'solid' && variant === 'primary',
-    },
-    {
-      'hover:bg-gray-700': type === 'solid' && variant === 'secondary',
-    },
+    'bg-white border-gray-600 text-gray-600 dark:bg-gray-800 dark:text-gray-300':
+      variant === 'ghost',
+  });
+  const effectClass = classNames({
+    'shadow-sm': true,
+    // solid
+    'hover:bg-indigo-700': variant === 'solid',
     // ghost
-    {
-      'hover:border-indigo-700 hover:text-indigo-700':
-        type === 'ghost' && variant === 'primary',
-    },
-    {
-      'hover:border-gray-700 hover:text-gray-700':
-        type === 'ghost' && variant === 'secondary',
-    },
-  );
-  const iconClass = classNames(
-    { 'mr-2': iconPosition === 'left' },
-    { 'ml-2': iconPosition === 'right' },
-    { 'h-4 w-4': size === 'sm' },
-    { 'h-5 w-5': size === 'md' },
-    { 'h-6 w-6': size === 'lg' },
-  );
+    'hover:text-gray-700 dark:hover:text-gray-400': variant === 'ghost',
+  });
+  // Additional classes for specific component elements
+  const iconClass = classNames({
+    'flex-shrink-0': iconAlignment === iconPosition,
+    'mr-2': iconPosition === 'left',
+    'ml-2': iconPosition === 'right',
+    'h-4 w-4': size === 'sm',
+    'h-5 w-5': size === 'md',
+    'h-6 w-6': size === 'lg',
+  });
+  const textClass = classNames({
+    'flex-grow': iconAlignment === iconPosition,
+    'border-gray-400': variant === 'ghost',
+    'border-l': variant === 'ghost' && iconPosition === 'left',
+    'border-r': variant === 'ghost' && iconPosition === 'right',
+  });
 
   // Icon visibility
+  // FIXME: May cause re-render
   const iconElement =
     Icon !== null && iconEffect === 'static'
       ? React.createElement(Icon, { className: iconClass })
       : Icon !== null && iconEffect === 'active' && isActive
       ? React.createElement(Icon, { className: iconClass })
       : null;
-
   return (
     <button
+      type={type}
+      disabled={isActive}
       className={[
         layoutClass,
         sizingClass,
@@ -197,7 +191,7 @@ export const TailwindButton = ({
       onClick={onClick}
     >
       {iconPosition === 'left' && iconElement}
-      {text && <span>{text}</span>}
+      {text && <span className={textClass}>{text}</span>}
       {iconPosition === 'right' && iconElement}
     </button>
   );

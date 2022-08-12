@@ -1,46 +1,34 @@
-import { Footer } from 'brand/Footer';
 import classNames from 'classnames';
+import { TailwindCard } from 'components/core/card/Card';
 import { OneColumnLayout } from 'components/layouts/OneColumnLayout';
+import { useNavigate } from 'react-router-dom';
+import { RouteMap } from 'router';
+import { SignUpFooter } from './signup/SignUpFooter';
 import { SignUpForm } from './signup/SignUpForm';
 import { SignUpHeader } from './signup/SignUpHeader';
 
 /**
- * The content component arranges page-level components inside the <main> element.
- *
- * This allows you to break your page up in to smaller groups of inter-related components.
- *
- * @returns
- */
-const SignUpContent = () => {
-  const containerClass = classNames('space-y-5');
-
-  return (
-    <>
-      <div className={containerClass}>
-        {/* <SignUpHeader /> */}
-        <SignUpForm />
-      </div>
-    </>
-  );
-};
-
-/**
  * The page component defines the semantic layout of the current page.
  *
- * This allows you to keep your components presentation loosely coupled to the active layout.
+ * This allows you to keep your components loosely coupled to the page.
  *
  * @returns
  */
 export const SignUpPage = () => {
+  let navigate = useNavigate();
+  const onSuccess = () => navigate(RouteMap.HOME);
+
   return (
-    <>
-      <OneColumnLayout
-        main={<SignUpContent />}
-        footer={<Footer />}
-        maxWidth="md"
-        bgColor="gray-900"
-      />
-    </>
+    <OneColumnLayout
+      main={
+        <TailwindCard
+          header={<SignUpHeader />}
+          body={<SignUpForm onSuccess={onSuccess} />}
+          footer={<SignUpFooter />}
+        />
+      }
+      maxWidth="md"
+    />
   );
 };
 

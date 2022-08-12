@@ -1,20 +1,20 @@
 import classNames from 'classnames';
-import { typography } from 'styled-system';
+import { Link } from 'react-router-dom';
 
-type LinkProps = {
+type TaiwindLinkProps = {
   href: string;
-  variant: 'light' | 'dark';
+  text: string;
 };
 
-export const Link = ({ href, variant = 'light' }: LinkProps) => {
+export const TailwindLink = ({ href, text }: TaiwindLinkProps) => {
   const typographyClass = classNames('font-medium');
   const colorClass = classNames(
-    { 'text-indigo-600 hover:text-indigo-500': variant === 'light' },
-    //{ 'text-indigo-100 hover:text-indigo-300': variant === 'dark' },
+    { 'text-indigo-600 hover:text-indigo-500': true },
+    { 'dark:text-gray-100 dark:hover:text-gray-300': true },
   );
   return (
-    <a href="/login" className={[typographyClass, colorClass].join(' ')}>
-      Log in
-    </a>
+    <Link to={href} className={[typographyClass, colorClass].join(' ')}>
+      {text}
+    </Link>
   );
 };

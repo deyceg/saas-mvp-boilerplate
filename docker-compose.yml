@@ -1,6 +1,21 @@
 version: '3.7'
 
 services:
+  x11-bridge:
+    image: jare/x11-bridge
+    container_name: x11-bridge
+    volumes:
+      - x11:/tmp/.X11-unix:rw
+    ports:
+      - "8080:8080"
+    restart: always
+    environment:
+      MODE: tcp
+      XPRA_HTML: "yes"
+      DISPLAY: ":14"
+      XPRA_TCP_PORT: "8080"
+      XPRA_PASSWORD: password
+
   frontend:
     image: mintsrc/frontend:latest
     build:
@@ -9,8 +24,14 @@ services:
     container_name: frontend
     hostname: frontend.local
     working_dir: /src
+    environment:
+      DISPLAY: ":14"
+      LIBGL_ALWAYS_INDIRECT: 0
+    depends_on:
+      - x11-bridge
     volumes:
       - ./frontend:/src
+      - x11:/tmp/.X11-unix:rw
     command: sleep infinity
 
   backend:
@@ -23,6 +44,7 @@ services:
     working_dir: /src
     volumes:
       - ./backend:/src
+      - ./frontend/src:/out
     command: sleep infinity
 
   postgres:
@@ -56,4 +78,6 @@ volumes:
   pg:
     driver: local
   redis:
+    driver: local
+  x11:
     driver: local

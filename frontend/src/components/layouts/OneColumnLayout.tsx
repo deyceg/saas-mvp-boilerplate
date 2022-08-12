@@ -19,10 +19,8 @@ type OneColumnLayoutProps = {
    */
   maxWidth: 'none' | 'content' | 'md' | 'xl';
   /**
-   * Set the background color of the \<body\> element
+   * Child components
    */
-  //FIXME: strongly type
-  bgColor?: string;
   children?: JSX.Element[];
 };
 
@@ -34,20 +32,7 @@ export const OneColumnLayout = ({
   main,
   footer,
   maxWidth,
-  bgColor = null,
 }: OneColumnLayoutProps) => {
-  const bodyClass = classNames(
-    { 'h-full': true },
-    { [`bg-${bgColor}`]: true },
-    // {
-    //   [`bg-${bgColor}-50`]:
-    //     bgColor !== null && bgColor !== 'white' && bgColor !== 'black',
-    // },
-    // {
-    //   [`bg-${bgColor}`]:
-    //     bgColor !== null && (bgColor === 'white' || bgColor === 'black'),
-    // },
-  );
   const containerClass = classNames(
     { 'min-h-full': true }, // fullscreen
     { flex: true }, // flex layout
@@ -96,26 +81,11 @@ export const OneColumnLayout = ({
     { 'lg:px-8': true },
   );
 
-  /**
-   * Add necessary tailwindcss classes to <body>
-   *
-   * TODO: Custom hook
-   */
-  useEffect(() => {
-    document.body.classList.add(...bodyClass.split(' '));
-
-    return function cleanup() {
-      document.body.classList.add(...bodyClass.split(' '));
-    };
-  }, [bodyClass]);
-
   return (
-    <>
-      <div className={containerClass}>
-        <header className={headerClass}>{header}</header>
-        <main className={mainClass}>{main}</main>
-        <footer className={footerClass}>{footer}</footer>
-      </div>
-    </>
+    <div className={containerClass}>
+      <header className={headerClass}>{header}</header>
+      <main className={mainClass}>{main}</main>
+      <footer className={footerClass}>{footer}</footer>
+    </div>
   );
 };

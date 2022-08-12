@@ -2,7 +2,7 @@ module.exports = {
   api: {
     input: './swagger.json',
     output: {
-      workspace: '../frontend/src/api',
+      workspace: '/out/api',
       mode: 'tags-split',
       schemas: 'model',
       target: 'endpoints',
